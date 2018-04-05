@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainMenuActivity">
+        <activity android:name=".ui.MainMenuActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,13 +19,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".BoardActivity"
+            android:name=".ui.BoardActivity"
             android:label=""
-            android:parentActivityName=".MainMenuActivity">
+            android:parentActivityName=".ui.MainMenuActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainMenuActivity">
-            </meta-data>
+                android:value=".ui.MainMenuActivity"></meta-data>
+        </activity>
+        <activity
+            android:name=".ui.ScoresListActivity"
+            android:label="@string/scores_list_title"
+            android:parentActivityName=".ui.MainMenuActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.MainMenuActivity"></meta-data>
         </activity>
     </application>
 

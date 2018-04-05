@@ -1,18 +1,19 @@
-package com.example.maximeperalez.memorygame;
+package com.example.maximeperalez.memorygame.ui;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.RadioGroup;
 
+import com.example.maximeperalez.memorygame.R;
 import com.example.maximeperalez.memorygame.enums.DifficultyLevel;
 
 public class MainMenuActivity extends AppCompatActivity {
 
     // Outlets
     private Button mPlayButton;
+    private Button mShowScoresButton;
     private RadioGroup mDifficultyLevelRadioGroup;
 
     // Constants
@@ -31,6 +32,10 @@ public class MainMenuActivity extends AppCompatActivity {
         // Define play button main action
         mPlayButton = findViewById(R.id.play_button);
         mPlayButton.setOnClickListener(view -> showBoard());
+
+        // Set up show scores button
+        mShowScoresButton = findViewById(R.id.scores_list_button);
+        mShowScoresButton.setOnClickListener(view -> showListOfScores());
 
         // Set up radio buttons
         mDifficultyLevelRadioGroup = findViewById(R.id.radioGroup);
@@ -56,6 +61,11 @@ public class MainMenuActivity extends AppCompatActivity {
     private void showBoard() {
         Intent intent = new Intent(this, BoardActivity.class);
         intent.putExtra(EXTRA_DIFFICULTY_LEVEL, difficultyLevel);
+        startActivity(intent);
+    }
+
+    private void showListOfScores() {
+        Intent intent = new Intent(this, ScoresListActivity.class);
         startActivity(intent);
     }
 }

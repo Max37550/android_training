@@ -1,15 +1,18 @@
-package com.example.maximeperalez.memorygame.viewmodel;
+package com.example.maximeperalez.memorygame.ui;
 
+import android.app.Application;
+import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
-import android.arch.lifecycle.ViewModel;
 import android.os.Handler;
 
 import com.example.maximeperalez.memorygame.managers.FlickManager;
 import com.example.maximeperalez.memorygame.managers.ImageDownloader;
+import com.example.maximeperalez.memorygame.managers.ScoreDbManager;
 import com.example.maximeperalez.memorygame.model.Board;
 import com.example.maximeperalez.memorygame.model.FlickImage;
+import com.example.maximeperalez.memorygame.model.Score;
 
 import java.util.ArrayList;
 
@@ -17,10 +20,11 @@ import java.util.ArrayList;
  * Created by maxime.peralez on 04/04/2018.
  */
 
-public class BoardViewModel extends ViewModel {
+public class BoardViewModel extends AndroidViewModel {
 
     // Managers
     private final ImageDownloader imageDownloader;
+    private final ScoreDbManager scoreDbManager;
 
     // Data Binding
     private final MutableLiveData<Board> boardLiveData = new MutableLiveData<>();
@@ -37,12 +41,16 @@ public class BoardViewModel extends ViewModel {
 
     // Score attributes
     private final MutableLiveData<Integer> numberOfFlipsLiveData = new MutableLiveData<>();
+    private long gameDuration = 0;
 
     // MARK: - Initialization
 
-    public BoardViewModel() {
+    public BoardViewModel(Application application) {
+        super(application);
+
         // TODO: Dependency Injection
         imageDownloader = new FlickManager();
+        scoreDbManager = new ScoreDbManager(application);
 
         // Starting score
         numberOfFlipsLiveData.setValue(0);
@@ -78,6 +86,10 @@ public class BoardViewModel extends ViewModel {
 
     public LiveData<ArrayList<FlickImage>> getFlickImages() {
         return flickImagesLiveData;
+    }
+
+    public void setGameDuration(long gameDuration) {
+        this.gameDuration = gameDuration;
     }
 
     // MARK: - Services
@@ -142,6 +154,10 @@ public class BoardViewModel extends ViewModel {
     }
 
     private void finalizeGame() {
+        // Store score
+        Score score = new Score(numberOfFlipsLiveData.getValue(), gameDuration);
+        scoreDbManager.storeNewScore(score);
+        // Notify observers that the game is done
         isGameDoneLiveData.setValue(true);
     }
 

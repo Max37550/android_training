@@ -1,20 +1,16 @@
-package com.example.maximeperalez.memorygame;
+package com.example.maximeperalez.memorygame.ui;
 
 import android.app.ProgressDialog;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.WindowManager;
 import android.widget.GridView;
 
-import com.example.maximeperalez.memorygame.adapters.ImageAdapter;
+import com.example.maximeperalez.memorygame.R;
+import com.example.maximeperalez.memorygame.adapters.BoardAdapter;
 import com.example.maximeperalez.memorygame.enums.DifficultyLevel;
-import com.example.maximeperalez.memorygame.viewmodel.BoardViewModel;
-
-import java.util.ArrayList;
 
 public class BoardActivity extends AppCompatActivity {
 
@@ -39,6 +35,7 @@ public class BoardActivity extends AppCompatActivity {
         public void run() {
             numberOfSeconds += 1;
             int minutes = (int) numberOfSeconds / 60;
+            mViewModel.setGameDuration(numberOfSeconds);
 
             String formattedTime = String.format("%d:%02d", minutes, numberOfSeconds % 60);
             getSupportActionBar().setSubtitle(String.valueOf(formattedTime));
@@ -111,7 +108,7 @@ public class BoardActivity extends AppCompatActivity {
     }
 
     private void updateBoard() {
-        mGridView.setAdapter(new ImageAdapter(this, mViewModel.getBoardLiveData().getValue(), getItemWidth(), getItemHeight()));
+        mGridView.setAdapter(new BoardAdapter(this, mViewModel.getBoardLiveData().getValue(), getItemWidth(), getItemHeight()));
         mGridView.invalidateViews();
     }
 
@@ -149,8 +146,6 @@ public class BoardActivity extends AppCompatActivity {
     private int getItemHeight() {
         return (mGridView.getMeasuredHeight() / mNumberOfRows);
     }
-
-    // TODO: Find a better way to enable/disable user interactions.
 
     private void disableUserInteractions() {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,

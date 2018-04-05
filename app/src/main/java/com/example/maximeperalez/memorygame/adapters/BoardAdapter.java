@@ -15,7 +15,7 @@ import com.example.maximeperalez.memorygame.model.Card;
  * Created by maxime.peralez on 03/04/2018.
  */
 
-public class ImageAdapter extends BaseAdapter {
+public class BoardAdapter extends BaseAdapter {
     // Context
     private Context mContext;
 
@@ -28,7 +28,7 @@ public class ImageAdapter extends BaseAdapter {
 
     // MARK: - Initialization
 
-    public ImageAdapter(Context c, Board board, int itemWidth, int itemHeight) {
+    public BoardAdapter(Context c, Board board, int itemWidth, int itemHeight) {
         mContext = c;
         mItemHeight = itemHeight;
         mItemWidth = itemWidth;
@@ -57,7 +57,8 @@ public class ImageAdapter extends BaseAdapter {
             // if it's not recycled, initialize some attributes
             imageView = new ImageView(mContext);
             imageView.setLayoutParams(new ViewGroup.LayoutParams(mItemWidth, mItemHeight));
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            imageView.setCropToPadding(true);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setPadding(8, 8, 8, 8);
         } else {
             imageView = (ImageView) convertView;

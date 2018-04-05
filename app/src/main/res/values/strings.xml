@@ -6,4 +6,6 @@
     <string name="difficulty_hard">Hard</string>
     <string name="difficulty_easy">Easy</string>
     <string name="difficulty_level_title">Choose a difficulty level:</string>
+    <string name="show_score_button_title">Show Scores</string>
+    <string name="scores_list_title">List of scores</string>
 </resources>

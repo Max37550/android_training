@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -13,7 +12,7 @@ import java.net.URL;
  * Created by maxime.peralez on 04/04/2018.
  */
 
-public class FlickImage implements Serializable {
+public class FlickImage {
 
     // Attributes
     private String id;

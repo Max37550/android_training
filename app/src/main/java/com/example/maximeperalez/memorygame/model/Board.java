@@ -60,10 +60,6 @@ public class Board {
         return true;
     }
 
-    public void storeBoard() {
-        // TODO
-    }
-
     // MARK: - Private
 
     private void shuffleCards() {
