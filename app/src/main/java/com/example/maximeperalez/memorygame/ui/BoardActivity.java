@@ -1,5 +1,6 @@
 package com.example.maximeperalez.memorygame.ui;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Handler;
@@ -118,8 +119,14 @@ public class BoardActivity extends AppCompatActivity {
     }
 
     private void finalizeGame() {
-        onBackPressed();
-        // TODO: Show popup with score or something
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        String messageFormat = getString(R.string.game_done_message);
+        String message = String.format(messageFormat, mViewModel.getNumberOfFlipsLiveData().getValue(), numberOfSeconds);
+        builder.setTitle(R.string.game_done_title)
+                .setMessage(message)
+                .setPositiveButton(R.string.game_done_action, (dialogInterface, i) -> onBackPressed())
+                .setCancelable(false)
+                .show();
     }
 
     private void fetchImages() {
@@ -129,8 +136,8 @@ public class BoardActivity extends AppCompatActivity {
 
     private void showLoadingScreen() {
         mProgressDialog = new ProgressDialog(this);
-        mProgressDialog.setTitle("Loading");
-        mProgressDialog.setMessage("Preparing board...");
+        mProgressDialog.setTitle(R.string.loading_popup_title);
+        mProgressDialog.setMessage(getString(R.string.loading_popup_message));
         mProgressDialog.setCancelable(false); // disable dismiss by tapping outside of the dialog
         mProgressDialog.show();
     }
