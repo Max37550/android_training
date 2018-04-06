@@ -1,13 +1,11 @@
 package com.example.maximeperalez.memorygame.ui;
 
-import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
+import android.arch.lifecycle.ViewModel;
 import android.os.Handler;
 
-import com.example.maximeperalez.memorygame.managers.FlickManager;
 import com.example.maximeperalez.memorygame.managers.ImageDownloader;
 import com.example.maximeperalez.memorygame.managers.ScoreDbManager;
 import com.example.maximeperalez.memorygame.model.Board;
@@ -20,11 +18,11 @@ import java.util.ArrayList;
  * Created by maxime.peralez on 04/04/2018.
  */
 
-public class BoardViewModel extends AndroidViewModel {
+public class BoardViewModel extends ViewModel {
 
     // Managers
-    private final ImageDownloader imageDownloader;
-    private final ScoreDbManager scoreDbManager;
+    private ImageDownloader imageDownloader;
+    private ScoreDbManager scoreDbManager;
 
     // Data Binding
     private final MutableLiveData<Board> boardLiveData = new MutableLiveData<>();
@@ -45,19 +43,13 @@ public class BoardViewModel extends AndroidViewModel {
 
     // MARK: - Initialization
 
-    public BoardViewModel(Application application) {
-        super(application);
-
-        // TODO: Dependency Injection
-        imageDownloader = new FlickManager();
-        scoreDbManager = new ScoreDbManager(application);
-
-        // Starting score
-        numberOfFlipsLiveData.setValue(0);
+    public BoardViewModel(ImageDownloader imageDownloader, ScoreDbManager scoreDbManager) {
+        this.imageDownloader = imageDownloader;
+        this.scoreDbManager = scoreDbManager;
         // Default values
+        numberOfFlipsLiveData.setValue(0);
         isGameDoneLiveData.setValue(false);
         isUserInteractionEnabledLiveData.setValue(true);
-
         // Data binding
         flickImagesLiveData = Transformations.map(imageDownloader.getFlickImagesLiveData(), flickImages -> {
             Board board = new Board(mNumberOfItems, flickImages);
@@ -101,7 +93,7 @@ public class BoardViewModel extends AndroidViewModel {
 
     // MARK: - Game logic
 
-    public void handleInteractionWithCard(final String tag, final int position) {
+    public void handleInteractionWithCard(final String tag, final int position, Handler handler) {
         Board board = boardLiveData.getValue();
 
         if (!board.isInteractionAllowed(position) || position == previousSelectedCardPosition) {
@@ -124,7 +116,6 @@ public class BoardViewModel extends AndroidViewModel {
         board.updateCardVisiblity(position, false);
         boardLiveData.setValue(board);
 
-        final Handler handler = new Handler();
         handler.postDelayed(() -> {
             resetBoard(tag, position);
             isUserInteractionEnabledLiveData.setValue(true);

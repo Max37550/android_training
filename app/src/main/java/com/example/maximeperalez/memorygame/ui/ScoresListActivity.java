@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.example.maximeperalez.memorygame.R;
 import com.example.maximeperalez.memorygame.adapters.ScoresListAdapter;
+import com.example.maximeperalez.memorygame.managers.ScoreDbManager;
 import com.example.maximeperalez.memorygame.model.Score;
 
 import java.util.ArrayList;
@@ -30,8 +31,11 @@ public class ScoresListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_scores_list);
 
         // Set up view model and observers
-        mViewModel = ViewModelProviders.of(this).get(ScoresListViewModel.class);
-        mViewModel.scoresLiveData.observe(this, this::updateList);
+        ScoresListViewModelFactory viewModelFactory = new ScoresListViewModelFactory(new ScoreDbManager(this));
+        mViewModel = ViewModelProviders
+                .of(this, viewModelFactory)
+                .get(ScoresListViewModel.class);
+        mViewModel.getScoresLiveData().observe(this, this::updateList);
 
         // Set up recycler view
         mRecyclerView = findViewById(R.id.scores_list_recycler_view);

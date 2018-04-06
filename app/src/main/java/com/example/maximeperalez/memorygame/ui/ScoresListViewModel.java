@@ -1,8 +1,7 @@
 package com.example.maximeperalez.memorygame.ui;
 
-import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.ViewModel;
 
 import com.example.maximeperalez.memorygame.managers.ScoreDbManager;
 import com.example.maximeperalez.memorygame.model.Score;
@@ -13,21 +12,24 @@ import java.util.ArrayList;
  * Created by maxime.peralez on 05/04/2018.
  */
 
-public class ScoresListViewModel extends AndroidViewModel {
+public class ScoresListViewModel extends ViewModel {
 
     // Managers
     private ScoreDbManager scoreDbManager;
 
     // Model
-    MutableLiveData<ArrayList<Score>> scoresLiveData = new MutableLiveData<>();
+    private MutableLiveData<ArrayList<Score>> scoresLiveData = new MutableLiveData<>();
 
     // MARK: - Initialization
 
-    ScoresListViewModel(Application application) {
-        super(application);
+    public ScoresListViewModel(ScoreDbManager scoreDbManager) {
+        this.scoreDbManager = scoreDbManager;
+    }
 
-        // TODO: Dependency injection
-        scoreDbManager = new ScoreDbManager(application);
+    // MARK: - Getters & Setters
+
+    public MutableLiveData<ArrayList<Score>> getScoresLiveData() {
+        return scoresLiveData;
     }
 
     // MARK: - Public

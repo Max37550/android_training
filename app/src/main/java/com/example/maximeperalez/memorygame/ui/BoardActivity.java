@@ -12,6 +12,8 @@ import android.widget.GridView;
 import com.example.maximeperalez.memorygame.R;
 import com.example.maximeperalez.memorygame.adapters.BoardAdapter;
 import com.example.maximeperalez.memorygame.enums.DifficultyLevel;
+import com.example.maximeperalez.memorygame.managers.FlickManager;
+import com.example.maximeperalez.memorygame.managers.ScoreDbManager;
 
 public class BoardActivity extends AppCompatActivity {
 
@@ -56,7 +58,11 @@ public class BoardActivity extends AppCompatActivity {
         initializeGridViewAttributes();
 
         // Initialize view model
-        mViewModel = ViewModelProviders.of(this).get(BoardViewModel.class);
+        BoardViewModelFactory viewModelFactory =
+                new BoardViewModelFactory(new FlickManager(), new ScoreDbManager(this));
+        mViewModel = ViewModelProviders
+                .of(this, viewModelFactory)
+                .get(BoardViewModel.class);
 
         // Data binding
         mViewModel.getBoardLiveData().observe(this, board -> {
@@ -81,12 +87,12 @@ public class BoardActivity extends AppCompatActivity {
         // Set up GridView
         mGridView = findViewById(R.id.gridview);
         mGridView.setNumColumns(mNumberOfColumns);
-        mGridView.post(() -> fetchImages());
+        mGridView.post(this::fetchImages);
 
         // Handle interaction with items
         mGridView.setOnItemClickListener((parent, v, position, id) -> {
             String newTag = (String) v.getTag();
-            mViewModel.handleInteractionWithCard(newTag, position);
+            mViewModel.handleInteractionWithCard(newTag, position, new Handler());
         });
     }
 
