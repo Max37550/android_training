@@ -35,4 +35,8 @@ dependencies {
 
     // Recycler view
     implementation 'com.android.support:recyclerview-v7:26.1.0'
+
+    // Testing dependencies
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-core:2.7.22'
 }

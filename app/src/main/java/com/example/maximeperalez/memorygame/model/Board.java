@@ -35,10 +35,6 @@ public class Board {
         return cards;
     }
 
-    public void setCards(ArrayList<Card> cards) {
-        this.cards = cards;
-    }
-
     // MARK: - Public
 
     public boolean isInteractionAllowed(int position) {
