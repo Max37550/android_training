@@ -5,7 +5,7 @@ package com.example.maximeperalez.memorygame.enums;
  */
 
 public enum DifficultyLevel {
-    EASY, NORMAL, HARD;
+    EASY, NORMAL, HARD, CUSTOM;
 
     public int boardDimension() {
         switch (this) {

@@ -104,6 +104,9 @@ public class BoardActivity extends AppCompatActivity {
     private void initializeGridViewAttributes() {
         DifficultyLevel difficultyLevel = (DifficultyLevel) getIntent().getSerializableExtra(MainMenuActivity.EXTRA_DIFFICULTY_LEVEL);
         int boardDimension = difficultyLevel.boardDimension();
+        if (difficultyLevel == DifficultyLevel.CUSTOM) {
+            boardDimension = getIntent().getIntExtra(MainMenuActivity.EXTRA_CUSTOM_BOARD_DIMENSION, 6);
+        }
         mNumberOfItems = boardDimension * boardDimension;
         mNumberOfRows = boardDimension;
         mNumberOfColumns = boardDimension;

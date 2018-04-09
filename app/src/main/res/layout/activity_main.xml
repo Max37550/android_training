@@ -5,54 +5,88 @@
     android:layout_height="match_parent"
     tools:context="com.example.maximeperalez.memorygame.ui.MainMenuActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/radioGroup"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="36dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:text="@string/difficulty_level_title"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:orientation="vertical">
 
-    <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:checkedButton="@+id/normal_radio_button"
-        android:orientation="horizontal"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:id="@+id/radioGroup">
-
-        <RadioButton
-            android:id="@+id/easy_radio_button"
+        <TextView
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="8dp"
-            android:text="@string/difficulty_easy"
-            android:textSize="18sp" />
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:text="@string/difficulty_level_title"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingBottom="8dp"/>
 
-        <RadioButton
-            android:id="@+id/normal_radio_button"
+        <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="8dp"
-            android:text="@string/difficulty_normal"
-            android:textSize="18sp" />
+            android:checkedButton="@+id/normal_radio_button"
+            android:orientation="horizontal"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:id="@+id/radioGroup">
 
-        <RadioButton
-            android:id="@+id/hard_radio_button"
-            android:layout_width="wrap_content"
+            <RadioButton
+                android:id="@+id/easy_radio_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/difficulty_easy"
+                android:textSize="18sp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp" />
+
+            <RadioButton
+                android:id="@+id/normal_radio_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/difficulty_normal"
+                android:textSize="18sp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp" />
+
+            <RadioButton
+                android:id="@+id/hard_radio_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/difficulty_hard"
+                android:textSize="18sp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp" />
+
+            <RadioButton
+                android:id="@+id/custom_radio_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/difficulty_custom"
+                android:textSize="18sp" />
+        </RadioGroup>
+
+        <SeekBar
+            android:id="@+id/custom_board_slider"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:text="@string/difficulty_hard"
-            android:textSize="18sp" />
-    </RadioGroup>
+            android:layout_marginTop="16dp"
+            android:visibility="invisible"
+            android:max="18" />
+
+        <TextView
+            android:id="@+id/custom_board_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginTop="8dp"
+            android:visibility="invisible" />
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/play_button"
