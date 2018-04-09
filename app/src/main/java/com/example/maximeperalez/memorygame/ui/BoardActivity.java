@@ -3,6 +3,7 @@ package com.example.maximeperalez.memorygame.ui;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.arch.lifecycle.ViewModelProviders;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.widget.GridView;
 
 import com.example.maximeperalez.memorygame.R;
 import com.example.maximeperalez.memorygame.adapters.BoardAdapter;
+import com.example.maximeperalez.memorygame.data.ScoreDbHelper;
 import com.example.maximeperalez.memorygame.enums.DifficultyLevel;
 import com.example.maximeperalez.memorygame.managers.FlickManager;
 import com.example.maximeperalez.memorygame.managers.ScoreDbManager;
@@ -58,8 +60,9 @@ public class BoardActivity extends AppCompatActivity {
         initializeGridViewAttributes();
 
         // Initialize view model
+        SQLiteDatabase db = new ScoreDbHelper(this).getWritableDatabase();
         BoardViewModelFactory viewModelFactory =
-                new BoardViewModelFactory(new FlickManager(), new ScoreDbManager(this));
+                new BoardViewModelFactory(new FlickManager(), new ScoreDbManager(db));
         mViewModel = ViewModelProviders
                 .of(this, viewModelFactory)
                 .get(BoardViewModel.class);

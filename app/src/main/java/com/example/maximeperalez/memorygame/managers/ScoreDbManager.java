@@ -1,12 +1,10 @@
 package com.example.maximeperalez.memorygame.managers;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.maximeperalez.memorygame.data.ScoreContract;
-import com.example.maximeperalez.memorygame.data.ScoreDbHelper;
 import com.example.maximeperalez.memorygame.model.Score;
 
 import java.util.ArrayList;
@@ -22,9 +20,8 @@ public class ScoreDbManager {
 
     // MARK: - Initialization
 
-    public ScoreDbManager(Context context) {
-        ScoreDbHelper scoreDbHelper = new ScoreDbHelper(context);
-        mDb = scoreDbHelper.getWritableDatabase();
+    public ScoreDbManager(SQLiteDatabase sqLiteDatabase) {
+        this.mDb  = sqLiteDatabase;
     }
 
     // MARK: - Public

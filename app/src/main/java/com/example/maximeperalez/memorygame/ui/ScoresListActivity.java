@@ -1,6 +1,7 @@
 package com.example.maximeperalez.memorygame.ui;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.example.maximeperalez.memorygame.R;
 import com.example.maximeperalez.memorygame.adapters.ScoresListAdapter;
+import com.example.maximeperalez.memorygame.data.ScoreDbHelper;
 import com.example.maximeperalez.memorygame.managers.ScoreDbManager;
 import com.example.maximeperalez.memorygame.model.Score;
 
@@ -31,7 +33,8 @@ public class ScoresListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_scores_list);
 
         // Set up view model and observers
-        ScoresListViewModelFactory viewModelFactory = new ScoresListViewModelFactory(new ScoreDbManager(this));
+        SQLiteDatabase db = new ScoreDbHelper(this).getWritableDatabase();
+        ScoresListViewModelFactory viewModelFactory = new ScoresListViewModelFactory(new ScoreDbManager(db));
         mViewModel = ViewModelProviders
                 .of(this, viewModelFactory)
                 .get(ScoresListViewModel.class);
